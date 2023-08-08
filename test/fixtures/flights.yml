@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  takeoff: 2023-08-08 18:26:13
+  duration: 1
+
+two:
+  takeoff: 2023-08-08 18:26:13
+  duration: 1
