@@ -1,0 +1,24 @@
+<h1>Booking number #<%= @booking.id %></h1>
+
+<h2>Flight info</h2>
+
+<strong>Departing from:</strong> <%= @booking.flight.departure_airport.name %><br>
+<strong>Arriving in:</strong> <%= @booking.flight.arrival_airport.name %>
+<br>
+<strong>Takeoff:</strong> <%= @booking.flight.takeoff.strftime("%m/%d/%Y") %> - <%= @booking.flight.takeoff.strftime("%H:%02M:%S") %><br>
+<strong>Flight duration</strong>: <%= (@booking.flight.duration)/3600 %>:<%= (((@booking.flight.duration)%3600)/60).to_s.rjust(2, '0') %>h <br>
+<strong>Estimated arrival time:</strong> 
+  <%= (@booking.flight.takeoff + @booking.flight.duration).strftime("%m/%d/%Y") %>
+    - <%= (@booking.flight.takeoff + @booking.flight.duration).strftime("%H:%02M:%S") %><br>
+  <hr>
+
+<h2>Passenger info</h2>
+<%= pluralize(@booking.passengers.count, "passenger") %> booked
+
+<% @booking.passengers.each_with_index do |passenger, index| %>
+  <h3>Passenger # <%= index+1 %></h3>
+  <strong>Name: </strong> <%= passenger.name %><br>
+  <strong>E-mail: </strong> <%= passenger.email %><br>
+<% end %>
+
+<%= render 'shared/footer' %>
