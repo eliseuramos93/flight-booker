@@ -1,0 +1,27 @@
+<h1>Flight info</h1>
+
+<strong>Departing from:</strong> <%= @flight.departure_airport.name %><br>
+<strong>Arriving in:</strong> <%= @flight.arrival_airport.name %>
+<br>
+<strong>Takeoff:</strong> <%= @flight.takeoff.strftime("%m/%d/%Y") %> - <%= @flight.takeoff.strftime("%H:%M:%S") %><br>
+<strong>Flight duration</strong>: <%= (@flight.duration)/3600 %>:<%= ((@flight.duration)%3600)/60 %> <br>
+<strong>Estimated arrival time:</strong> 
+  <%= (@flight.takeoff + @flight.duration).strftime("%m/%d/%Y") %>
+    - <%= (@flight.takeoff + @flight.duration).strftime("%H:%M:%S") %><br>
+  <hr>
+
+<h1> Passengers info </h1>
+
+<%= form_with model: @booking do |form| %>
+  <%= form.fields_for :passengers do |sub_form| %>
+    <ul>
+      <li><%= sub_form.label :name %></li>
+      <li><%= sub_form.text_field :name %></li>
+      <li><%= sub_form.label :email %></li>
+      <li><%= sub_form.email_field :email %></li>
+    </ul>
+  <% end %>
+  <br>
+  <%= form.hidden_field :flight_id, value: @flight.id %>
+  <%= form.submit %>
+<% end %>

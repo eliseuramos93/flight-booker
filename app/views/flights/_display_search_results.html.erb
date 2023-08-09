@@ -1,13 +1,14 @@
 <% unless params[:number_of_tickets].nil? %>
   <% unless @searched_flights.empty? %>
-    <hr>
+    <h2> Search results </h2>
     <%= form_with model: @booking, method: :get, url: new_booking_path do |f| %>
       <% @searched_flights.order(takeoff: :asc).each do |flight| %>
         <div class="flight-container">
           <div class="flight-radio">
-            <% form.radio_button :flight_id, value: flight.id %>
+            <%= f.radio_button :flight_id, flight.id %>
           </div>
           <div class="flight-info">
+            <hr>
             Departing from: <%= flight.departure_airport.name %><br>
             Arriving in: <%= flight.arrival_airport.name %><br>
             Departure time: <%= flight.takeoff %><br>
@@ -16,7 +17,8 @@
           </div>
         </div>
       <% end %>
-      <%= form.submit 'Go to checkout' %>
+      <%= f.hidden_field :number_of_tickets, value: params[:number_of_tickets]%>
+      <%= f.submit 'Go to checkout' %>
     <% end %>
   <% else %>
     No flights were found for this day.
