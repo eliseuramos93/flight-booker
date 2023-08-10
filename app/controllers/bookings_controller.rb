@@ -8,7 +8,15 @@ class BookingsController < ApplicationController
 
   def create
     @flight = Flight.find(booking_params[:flight_id].to_i)
-    @booking = @flight.bookings.build(booking_params)
+    @booking = @flight.bookings.build
+
+    booking_params[:passengers_attributes].each do |key, passenger|
+      unless Passenger.find_by(email: passenger[:email]).nil?
+        @booking.passengers << Passenger.find_by(email: passenger[:email])
+      else
+        @booking.passengers.build(passenger)
+      end
+    end
 
     if @booking.save
       redirect_to @booking
